@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5xj0(d64+v(cbycsahg70bwotb1476@b%(=s%1_-mmzctdmj_f'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -146,9 +146,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
-        'USER':'postgres',
-        'PASSWORD':'Kathiresan@2772',
-        'HOST':'db.vgjsomnrxlwqlyrbcxnk.supabase.co',
+        'USER':os.environ.get('DB_USER'), 
+        'PASSWORD':os.environ.get('DB_PASSWORD'),
+        'HOST':os.environ.get('DB_HOST'),
         'PORT':'5432',
     }
 }
@@ -204,7 +204,7 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images/')
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -218,8 +218,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'webproj018@gmail.com'
-EMAIL_HOST_PASSWORD = 'pkosdmophwcdtujv'
+EMAIL_HOST_USER = os.environ.get('EMAIL_ID')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
@@ -232,9 +232,12 @@ AWS_S3_REGION_NAME = "us-east-005"
 
 AWS_S3_ENDPOINT_URL = "https://s3.us-east-005.backblazeb2.com"
 
-AWS_ACCESS_KEY_ID = "005a86f2b7d47f00000000001"
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 
-AWS_SECRET_ACCESS_KEY = "K005/h4URXFrccalc5OnzTH7dMseJ7c"
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
-AWS_STORAGE_BUCKET_NAME = "WebProject-bucket"
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
+
+
+# if os.getcwd() == 
