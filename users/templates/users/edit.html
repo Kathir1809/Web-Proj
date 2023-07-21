@@ -1,0 +1,53 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+
+
+<!-- 
+<form action="{% url 'edituser' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+
+
+{{form.as_p}}
+
+<input type="submit" value="submit" >
+</form> -->
+
+
+
+<div class="auth">
+    <div class="card">
+      <div class="auth__header text-center">
+        <a href="{% url 'account' %}">
+          <img src="{% static 'images/logo1.png' %}" alt="icon" />
+        </a>
+        <h3>EDIT ACCOUNT</h3>
+      </div>
+
+      <form action="{% url 'edituser' %}" method="POST" enctype="multipart/form-data" class="form auth__form">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form__field">
+            <label for="formInput#text"> {{field.label}} </label>
+            {{field}}
+
+
+            </div>
+        {% endfor %}
+
+        <div class="auth__actions">
+          <input class="btn btn--sub btn--lg" type="submit" value="Submit" />
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+{% endblock content %}

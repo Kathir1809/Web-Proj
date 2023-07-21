@@ -1,0 +1,24 @@
+
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+
+  <main class="messagePage my-xl">
+    <div class="content-boxx">
+      <div class="message">
+        <a class="backButton" href="{% url 'inbox' %}">🔙</a>
+        <h2 class="message__subject">{{mess.subject}}</h4>
+          <a href="{% url 'userprofile' mess.sender.id %}" class="message__author">{{mess.name}}</a>
+          <p class="message__date">{{mess.created}}</p>
+          <div class="message__body">{{mess.body|linebreaksbr}}</div>
+      </div>
+    </div>
+  </main>
+
+
+
+{% endblock content %}

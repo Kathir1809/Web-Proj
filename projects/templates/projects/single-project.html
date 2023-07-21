@@ -1,0 +1,102 @@
+{% extends 'main.html' %}
+{%load static%}
+
+{% block content %}
+
+    <main class="singleProject my-md">
+        <div class="container">
+          <div class="layout">
+            <div class="column column--1of3">
+              <h3 class="singleProject__subtitle">Tools & Stacks</h3>
+              <div class="singleProject__toolStack">
+                {% for tag in pr.tags.all %}
+                    <span class="tag tag--pill tag--sub tag--lg">
+                    <small>{{tag}}</small>
+                    </span>
+                {% endfor %} 
+              </div>
+                {% if pr.source_link %}
+                    <a class="singleProject__liveLink" href="{{ pr.source_link }}" target="_blank"><i class="im im-external-link"></i>Source Code
+                    </a>
+                {% endif %}
+                {% if pr.demo_link %}
+                    <a class="singleProject__liveLink" href="{{pr.demo_link}}" target="_blank"><i class="im im-external-link"></i>Live Demo
+                    </a>
+                {% endif %}
+            </div>
+            <div class="column column--2of3">
+                {% if pr.featured_image %}
+                    <img class="singleProject__preview" src="{{ pr.featured_image.url }}" alt="portfolio thumbnail" />
+                {% else %}
+                    <img src="{% static 'images/default.jpg' %}">
+                {% endif %}
+              <a href="{% url 'userprofile' pr.owner.id %}" class="singleProject__developer">{{pr.owner}}</a>
+              <h2 class="singleProject__title">{{pr.title}}</h2>
+              <h3 class="singleProject__subtitle">About the Project</h3>
+              <div class="singleProject__info">
+                {{pr.description}}
+              </div>
+    
+              <div class="comments">
+                <h3 class="singleProject__subtitle">Feedback</h3>
+                <h5 class="project--rating">
+                  {{pr.vote_ratio}}% Postitive Feedback ({{pr.vote_total}} Vote{{pr.vote_total|pluralize:"s"}})
+                </h5>
+
+
+
+                {% if request.user.profiles == pr.owner %}
+                <p>You can't able to submit feedback for your own project</p>
+                {% elif request.user.is_authenticated %}
+                <form class="form" action="{% url 'project' pr.id %}" method="POST">
+                  {% csrf_token %}
+                  {% for field in form %}
+                    <div class="form__field">
+                      <label for="formInput#textarea">{{field.label}}</label>
+                      {{field}}
+                    </div>
+                  {% endfor %}
+                    <input class="btn btn--sub btn--lg" type="submit" value="Add Comment" />
+                </form>
+                {% else %}
+                <a href="{% url 'login' %}?next={{request.path}}">Login to submit feedback</a>
+                {% endif %}
+
+
+
+
+
+
+
+                <div class="commentList">
+                  {% for review in pr.review_set.all %}
+                    {% if review.body %}
+                      <div class="comment">
+                        {% if review.owner.profile_image %}
+                          <a href="{% url 'userprofile' review.owner.id %}">
+                            <img class="avatar avatar--md"
+                              src="{{review.owner.profile_image.url}}" alt="user" />
+                          </a>
+                        {% else %}
+                          <a href="{% url 'userprofile' review.owner.id %}">
+                            <img class="avatar avatar--md"
+                              src="{% static 'images/user.png' %}" alt="user" />
+                          </a>
+                        {% endif %}
+                        <div class="comment__details">
+                          <a href="{% url 'userprofile' review.owner.id %}" class="comment__author">{{review.owner.name}}</a>
+                          <p class="comment__info">{{review.body | linebreaksbr}}</p>
+                        </div>
+                      </div>
+                    {% endif %}  
+                    {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </main>
+
+{% endblock %}
+

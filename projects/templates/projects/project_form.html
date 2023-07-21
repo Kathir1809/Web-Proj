@@ -1,0 +1,43 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<h1 style="color: #2B2B2B; display: flex; justify-content: center; " >PROJECT FORM</h1>
+
+
+<main class="formPage my-xl">
+    <div class="content-boxx">
+        <div class="formWrapper">
+            <a class="backButton"  onClick="javascript:history.go(-1);" href="#">🔙<i class="im im-angle-left"></i></a>
+            <br>
+
+            <form class="form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form__field">
+                        <label for="formInput#text">{{field.label}}: </label>
+                        {{field}}
+                    </div>
+                {% endfor %}
+                <div class="form__field">
+                    {% for tag in project.tags.all %}
+                    <div class="project-tag tag tag-pill tag--main" data-tag="{{tag.id}}" data-project = "{{project.id}}" >{{tag.name}} &#215;</div>
+                    {% endfor %}
+                </div>
+                <div class="form__field">
+                    <label for="formInput#text">Tags</label>
+                    <textarea name="newtags" class="input" placeholder="Add more Tags with space between them" ></textarea>
+                </div>
+                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" style="display: flex;" />
+            </form>
+        </div>
+    </div>
+</main>
+
+
+
+
+
+
+
+{% endblock %}
