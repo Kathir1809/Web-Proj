@@ -8,7 +8,7 @@ for (let i = 0; tags.length > i; i++) {
         // console.log('TAG ID:', tagId)
         // console.log('PROJECT ID:', projectId)
 
-        fetch('http://127.0.0.1:8000/api/remove-tag/', {
+        fetch('http://web-proj.onrender.com/api/remove-tag/', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
